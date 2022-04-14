@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.entities.ui.MapMarkerUi
 import com.example.data.repositories.map.MapRepository
 import com.example.domain.common.Result
+import com.example.places_with_weather_app.R
 import com.example.places_with_weather_app.navigation.Screens
 import com.example.places_with_weather_app.presentation.utils.UiEvent
+import com.example.places_with_weather_app.presentation.utils.UiText
 import com.example.places_with_weather_app.presentation.weather.WeatherArgs
 import com.example.places_with_weather_app.utils.GsonUtils
 import kotlinx.coroutines.channels.Channel
@@ -49,14 +51,14 @@ class MapViewModel @Inject constructor(private val repository: MapRepository) : 
                             _markersState.value = result.data
                             sendUiEvent(
                                 UiEvent.ShowSnackbar(
-                                    message = "Marker was successfully deleted"
+                                    message = UiText.ResourceString(res = R.string.marker_deletion)
                                 )
                             )
                         }
                         is Result.Fail -> {
                             sendUiEvent(
                                 UiEvent.ShowSnackbar(
-                                    message = mapScreenEvent.errorMessage
+                                    message = UiText.ResourceString(res = R.string.error_message)
                                 )
                             )
                         }
@@ -76,7 +78,7 @@ class MapViewModel @Inject constructor(private val repository: MapRepository) : 
                         is Result.Fail -> {
                             sendUiEvent(
                                 UiEvent.ShowSnackbar(
-                                    message = mapScreenEvent.errorMessage
+                                    message = UiText.ResourceString(res = R.string.error_message)
                                 )
                             )
                         }

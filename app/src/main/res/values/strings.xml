@@ -4,4 +4,5 @@
     <string name="marker_deletion">Marker was successfully deleted</string>
     <string name="marker_saving">Marker was successfully saved</string>
     <string name="empty_title">Title can\'t be empty</string>
+    <string name="error_message">"Oops! Something went wrong :("</string>
 </resources>

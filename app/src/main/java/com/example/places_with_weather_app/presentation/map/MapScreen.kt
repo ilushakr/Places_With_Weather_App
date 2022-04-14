@@ -33,7 +33,7 @@ fun MapScreen(
     onNavigate: (UiEvent) -> Unit
 ) {
 
-    val deleteMarkerMessage = stringResource(id = R.string.marker_deletion)
+    val context = LocalContext.current
 
     val modalBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -56,8 +56,8 @@ fun MapScreen(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message,
-                        actionLabel = event.action
+                        message = event.message.asString(context),
+                        actionLabel = event.action?.asString(context)
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         // Do smthg
@@ -92,8 +92,7 @@ fun MapScreen(
                         is MapBottomSheetOptions.DeleteMarker -> {
                             viewModel.onEvent(
                                 MapScreenEvent.DeleteMarker(
-                                    marker = option.marker,
-                                    message = deleteMarkerMessage
+                                    marker = option.marker
                                 )
                             )
                         }

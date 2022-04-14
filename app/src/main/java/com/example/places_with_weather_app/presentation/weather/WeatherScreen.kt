@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,8 @@ fun WeatherInfoScreen(
     onNavigate: (UiEvent) -> Unit
 ) {
 
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         val args = fromArgs<WeatherArgs>(weatherArgs)
         viewModel.getData(args.lat, args.lng)
@@ -45,8 +48,8 @@ fun WeatherInfoScreen(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message,
-                        actionLabel = event.action,
+                        message = event.message.asString(context),
+                        actionLabel = event.action?.asString(context),
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         // Do smthg
@@ -151,8 +154,8 @@ fun WeatherInfoTopBar(
     onBack: () -> Unit,
     onAction: (WeatherScreenEvent) -> Unit
 ) {
-    val saveMarkerMessage = stringResource(id = R.string.marker_saving)
-    val emptyTitleMessage = stringResource(id = R.string.empty_title)
+//    val saveMarkerMessage = stringResource(id = R.string.marker_saving)
+//    val emptyTitleMessage = stringResource(id = R.string.empty_title)
 
     TopAppBar(
         title = {
@@ -165,10 +168,7 @@ fun WeatherInfoTopBar(
                         IconButton(
                             onClick = {
                                 onAction(
-                                    WeatherScreenEvent.SavePlace(
-                                        message = saveMarkerMessage,
-                                        emptyTitleMessage = emptyTitleMessage
-                                    )
+                                    WeatherScreenEvent.SavePlace
                                 )
                             }
                         ) {

@@ -7,7 +7,9 @@ import com.example.data.entities.ui.MapMarkerUi
 import com.example.data.entities.ui.WeatherUi
 import com.example.data.repositories.weather.WeatherRepository
 import com.example.domain.common.Result
+import com.example.places_with_weather_app.R
 import com.example.places_with_weather_app.presentation.utils.UiEvent
+import com.example.places_with_weather_app.presentation.utils.UiText
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -68,7 +70,7 @@ class WeatherViewModel @Inject constructor(
                     if (tempPlaceNotNull.title.isBlank()) {
                         sendUiEvent(
                             UiEvent.ShowSnackbar(
-                                message = event.emptyTitleMessage,
+                                message = UiText.ResourceString(res = R.string.empty_title),
                             )
                         )
                         return
@@ -76,8 +78,8 @@ class WeatherViewModel @Inject constructor(
                     repository.updatePlace(tempPlaceNotNull) { result ->
                         mapPlaceResult(result, tempPlaceNotNull.latLng.latitude, tempPlaceNotNull.latLng.longitude)
                         val message = when (_modeState.value) {
-                            WeatherScreenMode.Error -> event.errorMessage
-                            WeatherScreenMode.Exist -> event.message
+                            WeatherScreenMode.Error -> UiText.ResourceString(res = R.string.error_message)
+                            WeatherScreenMode.Exist -> UiText.ResourceString(res = R.string.marker_saving)
                             else -> null
                         }
 
