@@ -30,8 +30,11 @@ android {
             )
         }
 
+        val weatherKey = System.getenv("ENV_WEATHER_KEY")
+        val googleMapsKey = System.getenv("ENV_GOOGLE_MAPS_KEY")
         forEach { buildType ->
-            buildType.buildConfigField("String", "WEATHER_KEY", "\"fa4c7cf9f000ee401cd8df981bb258c5\"")
+            buildType.buildConfigField("String", "WEATHER_KEY", weatherKey)
+            buildType.resValue("string", "google_maps_api_key", googleMapsKey)
         }
 
     }
