@@ -30,8 +30,12 @@ android {
             )
         }
 
+        // https://openweathermap.org/current
         val weatherKey = System.getenv("ENV_WEATHER_KEY")
+
+        // https://developers.google.com/maps/documentation/android-sdk/get-api-key?hl=ru
         val googleMapsKey = System.getenv("ENV_GOOGLE_MAPS_KEY")
+
         forEach { buildType ->
             buildType.buildConfigField("String", "WEATHER_KEY", weatherKey)
             buildType.resValue("string", "google_maps_api_key", googleMapsKey)
